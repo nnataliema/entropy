@@ -13,7 +13,7 @@ function App() {
             onClick={() => setCurrentPage('home')}
             className="text-3xl hover:underline"
           >
-            [ENTROPY]
+            [ENTR<span className="animate-turn-red">O</span>PY]
           </button>
           <div className="flex items-center gap-8 text-lg">
             <button
