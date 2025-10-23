@@ -52,7 +52,7 @@
   }
 
   .animate-fade-in {
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 2s ease-in-out;
   }
 
   .animate-slide-up {
@@ -61,7 +61,7 @@
   }
 
   .animate-turn-red {
-    animation: turnRed 3s ease-in-out forwards;
+    animation: turnRed 5s ease-in-out forwards;
   }
 }
 
