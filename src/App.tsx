@@ -1,191 +1,174 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type Page = 'home' | 'about' | 'solutions' | 'contact';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            entry.target.classList.remove('opacity-0', 'translate-y-20');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+    );
+
+    const sections = document.querySelectorAll('.scroll-section');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [currentPage]);
+
   return (
-    <div className="min-h-screen bg-black text-white font-mono overflow-x-hidden w-full">
-      <nav className="border-b border-white/20 py-6 px-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen bg-black text-gray-100 overflow-x-hidden w-full relative">
+
+      <nav className="py-8 px-6 relative z-50">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           <button
             onClick={() => setCurrentPage('home')}
-            className="text-3xl hover:underline"
+            className="flex items-center gap-3 hover:scale-110 hover:opacity-80 transition-all duration-300"
           >
-            [ENTR<span className="animate-turn-red">O</span>PY]
+            <img src="/logo_dark.png" alt="Entropy Logo" className="h-6 w-6 select-none pointer-events-none" draggable="false" />
+            <span className="text-xl font-light tracking-wide uppercase">ENTROPY</span>
           </button>
-          <div className="flex items-center gap-8 text-lg">
+          <div className="flex items-center gap-12 text-sm font-light tracking-wide uppercase">
             <button
               onClick={() => setCurrentPage('about')}
-              className="hover:underline"
+              className="hover:scale-110 hover:text-red-600 transition-all duration-300 relative group"
             >
-              about
+              ABOUT
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
             </button>
             <button
               onClick={() => setCurrentPage('solutions')}
-              className="hover:underline"
+              className="hover:scale-110 hover:text-red-600 transition-all duration-300 relative group"
             >
-              solutions
+              SOLUTIONS
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
             </button>
             <button
               onClick={() => setCurrentPage('contact')}
-              className="hover:underline"
+              className="hover:scale-110 hover:text-red-600 transition-all duration-300 relative group"
             >
-              contact
+              CONTACT
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
             </button>
           </div>
         </div>
       </nav>
 
       {currentPage === 'home' && (
-        <main className="max-w-4xl mx-auto px-6 py-20">
-          <div className="mb-20">
-            <h1 className="text-7xl mb-8 leading-tight">
-              Turn Waste into <span className="animate-turn-red">Warmth</span>
-            </h1>
-            <p className="text-3xl mb-6 text-white/80">
-              Data centers generate massive amounts of heat. We connect them with businesses that need it.
-            </p>
+        <>
+          <div className="min-h-screen flex items-center justify-center relative z-10 px-6 -mt-20">
+            <div className="text-center animate-fade-in">
+              <h2 className="text-5xl md:text-7xl font-light mb-12 leading-tight tracking-tight uppercase">
+                TURN WASTE INTO <span className="animate-pulse-red">WARMTH</span>
+              </h2>
+              <h4 className="text-xl md:text-2xl font-light text-gray-400 max-w-3xl mx-auto leading-relaxed uppercase animate-slide-up">
+                <p>ΔS ≥ 0</p>
+                <br></br>
+                The Second Law of Thermodynamics states that the state of entropy of the entire universe, as an isolated system, will always increase over time. 
+              </h4>
+            </div>
           </div>
 
-          <div className="space-y-16">
-            <section>
-              <h2 className="text-4xl mb-6 border-b border-white/20 pb-2">The Problem</h2>
-              <p className="text-2xl text-white/80 leading-relaxed">
-                Data centers use enormous energy to cool their servers. That heat is typically wasted.
+        <main className="max-w-6xl mx-auto px-6 py-32 relative z-10">
+
+          <div className="space-y-32">
+            <section className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h2 className="text-base md:text-lg font-light tracking-widest mb-6 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">THE PROBLEM</h2>
+              <p className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed uppercase group-hover:text-gray-100 transition-colors duration-300">
+                DATA CENTERS TURN 100% OF THEIR ELECTRICAL ENERGY INTO HEAT. THAT HEAT CAN BE CAPTURED TO WARM HOMES + BUSINESSES NEARBY. BUT PROJECTS ARE FRAGMENTED AND <em><b>SLOW</b></em> TO DEPLOY.
               </p>
             </section>
 
-            <section>
-              <h2 className="text-4xl mb-6 border-b border-white/20 pb-2">Our Solution</h2>
-              <p className="text-2xl text-white/80 leading-relaxed">
-                We capture that heat and deliver it to facilities that need it for heating, manufacturing, or agriculture.
+            <section className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h2 className="text-base md:text-lg font-light tracking-widest mb-6 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">OUR SOLUTION</h2>
+              <p className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed uppercase group-hover:text-gray-100 transition-colors duration-300">
+                ELIMINATE THE FRICTION. NURTURE THE SYMBIOTIC RELATIONSHIP BETWEEN COMPUTE AND COMMUNITIES.
               </p>
             </section>
 
-            <section>
-              <h2 className="text-4xl mb-6 border-b border-white/20 pb-2">The Impact</h2>
-              <p className="text-2xl text-white/80 leading-relaxed">
-                Lower energy costs for buyers. New revenue for data centers. Better for the planet.
+            <section className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h2 className="text-base md:text-lg font-light tracking-widest mb-6 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">THE IMPACT</h2>
+              <p className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed uppercase group-hover:text-gray-100 transition-colors duration-300">
+                COMMUNITIES GET FREE HEATING. DATA CENTERS GET FREE COOLING. EVERYONE CUTS FOSSIL FUEL RELIANCE.
               </p>
             </section>
 
-            <section>
-              <h2 className="text-4xl mb-6 border-b border-white/20 pb-2">How It Works</h2>
-              <div className="space-y-4 text-2xl text-white/80 leading-relaxed">
-                <p>
-                  Data centers produce heat as servers run. Instead of releasing it into the air, we capture it through heat exchange systems.
-                </p>
-                <p>
-                  That heat gets transferred to nearby facilities: agricultural operations, warehouses, district heating systems, or industrial processes.
-                </p>
-                <p>
-                  Everyone wins. Data centers earn revenue from waste. Buyers get affordable heat. Communities reduce emissions.
-                </p>
-              </div>
-            </section>
 
-            <section>
-              <h2 className="text-4xl mb-6 border-b border-white/20 pb-2">Who Benefits</h2>
-              <div className="grid md:grid-cols-2 gap-12">
-                <div>
-                  <h3 className="text-3xl mb-4 font-semibold">For Data Centers</h3>
-                  <ul className="space-y-2 text-2xl text-white/80">
-                    <li>→ Create a new revenue stream from waste heat</li>
-                    <li>→ Improve sustainability metrics</li>
-                    <li>→ Reduce cooling costs</li>
-                    <li>→ Meet ESG goals</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-3xl mb-4 font-semibold">For Heat Buyers</h3>
-                  <ul className="space-y-2 text-2xl text-white/80">
-                    <li>→ Access reliable, cost-effective heating</li>
-                    <li>→ Lower operational expenses</li>
-                    <li>→ Reduce carbon footprint</li>
-                    <li>→ Simple integration with existing systems</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            <section className="border border-white/20 p-8 text-center">
-              <h2 className="text-4xl mb-4">Ready to Connect?</h2>
-              <p className="text-2xl text-white/80 mb-8">
-                Whether you have heat to sell or need a heating solution, we make the connection simple.
+            <section className="py-24 text-center max-w-3xl mx-auto scroll-section opacity-0 translate-y-20 transition-all duration-700">
+              <h2 className="text-4xl md:text-5xl font-light mb-6 leading-tight uppercase">READY TO CONNECT?</h2>
+              <p className="text-xl font-light text-gray-400 mb-12 leading-relaxed">
+              learn more + how to become a beta user
               </p>
               <button
                 onClick={() => setCurrentPage('contact')}
-                className="border border-white px-8 py-3 hover:bg-white hover:text-black transition-colors text-2xl"
+                className="bg-gray-800 text-gray-100 px-10 py-4 hover:bg-red-600 hover:scale-110 hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 text-sm font-light tracking-wide uppercase"
               >
-                Contact Us
+                CONTACT US
               </button>
             </section>
           </div>
         </main>
+        </>
       )}
 
       {currentPage === 'about' && (
-        <main className="max-w-4xl mx-auto px-6 py-20">
-          <h1 className="text-7xl mb-12">About Entropy</h1>
+        <main className="max-w-6xl mx-auto px-6 py-32 relative z-10">
+          <h1 className="text-7xl md:text-8xl font-light mb-20 leading-tight tracking-tight uppercase">ABOUT <span className="animate-pulse-red">ENTROPY</span></h1>
 
-          <div className="space-y-8 text-2xl text-white/80 leading-relaxed">
-            <p>
-              <strong className="text-white">Entropy</strong> is a <strong className="text-white">B2B marketplace platform</strong> connecting <strong className="text-white">data centers</strong> with nearby buildings to reuse <strong className="text-white">waste heat</strong>.
-              We believe that the <strong className="text-white">massive amounts of heat</strong> generated by data centers shouldn't be wasted when so many
-              facilities need <strong className="text-white">reliable, affordable heating</strong>.
+          <div className="space-y-12 text-xl md:text-2xl font-light text-gray-400 leading-relaxed max-w-4xl uppercase">
+            <p className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 hover:text-gray-100 group">
+              <span className="text-gray-100">ENTROPY</span> IS A <span className="text-gray-100">B2B MARKETPLACE PLATFORM</span> CONNECTING <span className="text-gray-100">DATA CENTERS</span> WITH NEARBY BUILDINGS TO REUSE <span className="text-gray-100">WASTE HEAT</span>.
+              WE BELIEVE THAT THE <span className="text-gray-100">MASSIVE AMOUNTS OF HEAT</span> GENERATED BY DATA CENTERS SHOULDN'T BE WASTED WHEN SO MANY
+              FACILITIES NEED <span className="text-gray-100">RELIABLE, AFFORDABLE HEATING</span>.
             </p>
 
-            <p>
-              Our mission is to <strong className="text-white">transform waste heat</strong> into a valuable resource, creating <strong className="text-white">new revenue streams</strong> for data
-              centers while providing <strong className="text-white">cost-effective, carbon-negative heating solutions</strong> for businesses and communities.
-            </p>
-
-            <p>
-              By matching <strong className="text-white">heat suppliers</strong> with <strong className="text-white">heat offtakers</strong> based on location, temperature requirements, and demand
-              profiles, we're enabling <strong className="text-white">sustainable heating at scale</strong> and helping <strong className="text-white">reduce carbon emissions</strong> across industries.
+            <p className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 hover:text-gray-100 group">
+              OUR MISSION IS TO <span className="text-gray-100">TRANSFORM WASTE HEAT</span> INTO A VALUABLE RESOURCE, CREATING <span className="text-gray-100">NEW REVENUE STREAMS</span> FOR DATA
+              CENTERS WHILE PROVIDING <span className="text-gray-100">COST-EFFECTIVE, CARBON-NEGATIVE HEATING SOLUTIONS</span> FOR BUSINESSES AND COMMUNITIES.
             </p>
           </div>
         </main>
       )}
 
       {currentPage === 'solutions' && (
-        <main className="max-w-4xl mx-auto px-6 py-20">
-          <h1 className="text-7xl mb-12">Our Solution</h1>
+        <main className="max-w-6xl mx-auto px-6 py-32 relative z-10">
+          <h1 className="text-7xl md:text-8xl font-light mb-20 leading-tight tracking-tight uppercase">OUR <span className="animate-pulse-red">SOLUTION</span></h1>
 
-          <p className="text-3xl text-white/80 leading-relaxed mb-12">
-            Entropy connects data centers with nearby buildings to reuse their waste heat. Our platform matches
-            heat suppliers with heat offtakers based on location, temperature, and demand profiles to enable
-            carbon-negative heating at scale.
-          </p>
 
-          <div className="space-y-8">
-            <section>
-              <h3 className="text-3xl mb-3 border-b border-white/20 pb-2">Matchmaking Algorithm</h3>
-              <p className="text-2xl text-white/80 leading-relaxed">
-                We match supply (data centers) with the most compatible demand (offtakers).
+          <div className="space-y-24 max-w-4xl">
+            <section className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h3 className="text-base md:text-lg font-light tracking-widest mb-6 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">MATCHMAKING ALGORITHM</h3>
+              <p className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed uppercase group-hover:text-gray-100 transition-colors duration-300">
+                WE MATCH SUPPLY (DATA CENTERS) WITH THE MOST COMPATIBLE DEMAND (OFFTAKERS).
               </p>
             </section>
 
-            <section>
-              <h3 className="text-3xl mb-3 border-b border-white/20 pb-2">Savings + Cost Calculator</h3>
-              <p className="text-2xl text-white/80 leading-relaxed">
-                We calculate how much it costs to deploy your heat reuse project and how much you will save.
+            <section className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h3 className="text-base md:text-lg font-light tracking-widest mb-6 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">SAVINGS + COST CALCULATOR</h3>
+              <p className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed uppercase group-hover:text-gray-100 transition-colors duration-300">
+                WE CALCULATE HOW MUCH IT COSTS TO DEPLOY YOUR HEAT REUSE PROJECT AND HOW MUCH YOU WILL SAVE.
               </p>
             </section>
 
-            <section>
-              <h3 className="text-3xl mb-3 border-b border-white/20 pb-2">Real-time Heat Transfer Monitoring</h3>
-              <p className="text-2xl text-white/80 leading-relaxed">
-                We use IoT sensors embedded in the infrastructure to track each Watt transferred.
+            <section className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h3 className="text-base md:text-lg font-light tracking-widest mb-6 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">REAL-TIME HEAT TRANSFER MONITORING</h3>
+              <p className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed uppercase group-hover:text-gray-100 transition-colors duration-300">
+                WE USE IOT SENSORS EMBEDDED IN THE INFRASTRUCTURE TO TRACK EACH WATT TRANSFERRED.
               </p>
             </section>
 
-            <section>
-              <h3 className="text-3xl mb-3 border-b border-white/20 pb-2">Carbon Credits Dashboard</h3>
-              <p className="text-2xl text-white/80 leading-relaxed">
-                We automatically convert each Watt and calculate your resulting revenue from carbon credits.
+            <section className="scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h3 className="text-base md:text-lg font-light tracking-widest mb-6 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">CARBON CREDITS DASHBOARD</h3>
+              <p className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed uppercase group-hover:text-gray-100 transition-colors duration-300">
+                WE AUTOMATICALLY CONVERT EACH WATT AND CALCULATE YOUR RESULTING REVENUE FROM CARBON CREDITS.
               </p>
             </section>
           </div>
@@ -193,53 +176,52 @@ function App() {
       )}
 
       {currentPage === 'contact' && (
-        <main className="max-w-4xl mx-auto px-6 py-20">
-          <h1 className="text-7xl mb-12">Contact Us</h1>
+        <main className="max-w-6xl mx-auto px-6 py-32 relative z-10">
+          <h1 className="text-7xl md:text-8xl font-light mb-20 leading-tight tracking-tight uppercase"><span className="animate-pulse-red">CONTACT</span> US</h1>
 
-          <p className="text-3xl text-white/80 mb-12 leading-relaxed">
-            Interested in learning more about Entropy or exploring partnership opportunities?
-            We'd love to hear from you.
+          <p className="text-2xl md:text-3xl font-light text-gray-400 mb-24 leading-relaxed max-w-4xl uppercase scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 hover:text-gray-100">
+            learn more. let's collaborate:
           </p>
 
-          <div className="space-y-8 mb-12">
-            <div className="border-b border-white/20 pb-4">
-              <h3 className="text-3xl mb-2">Email</h3>
+          <div className="space-y-12 mb-24 max-w-3xl">
+            <div className="pb-8 border-b border-gray-800 scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h3 className="text-sm font-light tracking-widest mb-4 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">EMAIL</h3>
               <a
                 href="mailto:hello@entropy.us.com"
-                className="text-2xl text-white/80 hover:text-white hover:underline"
+                className="text-2xl font-light text-gray-400 hover:text-gray-100 transition-colors"
               >
-                hello@entropy.us.com
+                natalienarima@gmail.com
               </a>
             </div>
 
-            <div className="border-b border-white/20 pb-4">
-              <h3 className="text-3xl mb-2">Phone</h3>
+            <div className="pb-8 border-b border-gray-800 scroll-section opacity-0 translate-y-20 transition-all duration-700 hover:scale-105 group">
+              <h3 className="text-sm font-light tracking-widest mb-4 text-gray-500 uppercase group-hover:text-red-600 transition-colors duration-300">PHONE</h3>
               <a
                 href="tel:+16464897569"
-                className="text-2xl text-white/80 hover:text-white hover:underline"
+                className="text-2xl font-light text-gray-400 hover:text-gray-100 transition-colors"
               >
                 (646) 489-7569
               </a>
             </div>
           </div>
 
-          <div className="text-center">
+          <div>
             <a
               href="https://calendly.com/natalienarima/30min?back=1&month=2025-10"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block border border-white px-8 py-3 hover:bg-white hover:text-black transition-colors text-2xl"
+              className="inline-block bg-gray-800 text-gray-100 px-10 py-4 hover:bg-gray-600 transition-colors text-sm font-light tracking-wide uppercase"
             >
-              Book With Me
+              BOOK WITH ME
             </a>
           </div>
         </main>
       )}
 
-      <footer className="border-t border-white/20 py-8 px-6 mt-20">
-        <div className="max-w-4xl mx-auto text-center text-white/60 text-lg">
-          <p className="mb-1">Second Law, Inc.</p>
-          <p>Turn waste into warmth</p>
+      <footer className="border-t border-gray-800 py-12 px-6 mt-32 relative z-10">
+        <div className="max-w-6xl mx-auto text-center text-gray-500 text-sm font-light uppercase">
+          <p className="mb-2 tracking-wide">SECOND LAW, INC.</p>
+          <p className="tracking-wide">TURN WASTE INTO WARMTH</p>
         </div>
       </footer>
     </div>
