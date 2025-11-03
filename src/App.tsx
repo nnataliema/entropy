@@ -28,7 +28,7 @@ function App() {
     <div className="min-h-screen bg-black text-gray-100 overflow-x-hidden w-full relative">
 
       <nav className="py-8 px-6 relative z-50">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0">
           <button
             onClick={() => setCurrentPage('home')}
             className="flex items-center gap-3 hover:scale-110 hover:opacity-80 transition-all duration-300"
@@ -36,7 +36,7 @@ function App() {
             <img src="/logo_dark.png" alt="Entropy Logo" className="h-6 w-6 select-none pointer-events-none" draggable="false" />
             <span className="text-xl font-light tracking-wide uppercase">ENTROPY</span>
           </button>
-          <div className="flex items-center gap-12 text-sm font-light tracking-wide uppercase">
+          <div className="flex items-center gap-6 sm:gap-12 text-sm font-light tracking-wide uppercase">
             <button
               onClick={() => setCurrentPage('about')}
               className="hover:scale-110 hover:text-red-600 transition-all duration-300 relative group"
