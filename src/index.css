@@ -54,6 +54,39 @@
     }
   }
 
+  @keyframes fadeRedServer {
+    0% {
+      color: #f3f4f6;
+    }
+    15% {
+      color: #dc2626;
+    }
+    30% {
+      color: #f3f4f6;
+    }
+    100% {
+      color: #f3f4f6;
+    }
+  }
+
+  @keyframes fadeRedCity {
+    0% {
+      color: #f3f4f6;
+    }
+    30% {
+      color: #f3f4f6;
+    }
+    45% {
+      color: #dc2626;
+    }
+    60% {
+      color: #f3f4f6;
+    }
+    100% {
+      color: #f3f4f6;
+    }
+  }
+
   @keyframes equationFloat {
     0%, 100% {
       transform: translateY(0px) scale(1);
@@ -75,11 +108,19 @@
   }
 
   .animate-pulse-red {
-    animation: pulseRed 3s ease-out infinite;
+    animation: pulseRed 6s ease-out infinite;
   }
 
   .animate-equation {
     animation: equationFloat 3s ease-in-out infinite;
+  }
+
+  .animate-red-server {
+    animation: fadeRedServer 8s ease-in-out 1s infinite;
+  }
+
+  .animate-red-city {
+    animation: fadeRedCity 8s ease-in-out 1s infinite;
   }
 }
 
