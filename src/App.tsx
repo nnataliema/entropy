@@ -67,7 +67,7 @@ function App() {
           <div className="min-h-screen flex items-center justify-center relative z-10 px-6 -mt-20">
             <div className="text-center animate-fade-in">
               <h2 className="text-5xl md:text-7xl font-light mb-12 leading-tight tracking-tight uppercase">
-                TURN WASTE INTO <span className="animate-pulse-red">WARMTH</span>
+                FROM <span className="animate-pulse-red">SERVER</span> TO <span className="animate-pulse-red">CITY</span> 
               </h2>
               <h4 className="text-xl md:text-2xl font-light text-gray-400 max-w-3xl mx-auto leading-relaxed uppercase animate-slide-up">
                 <p>ΔS ≥ 0</p>
